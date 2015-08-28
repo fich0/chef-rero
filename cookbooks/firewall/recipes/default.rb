@@ -19,30 +19,35 @@
 
 include_recipe 'chef-sugar'
 
-firewall 'default' do
-  ipv6_enabled node['firewall']['ipv6_enabled']
-  action :install
+firewall_rule "smserver-forward" do
+  protocol      :tcp
+  port          443
 end
+
+#firewall 'default' do
+#  ipv6_enabled node['firewall']['ipv6_enabled']
+#  action :install
+#end
 
 # create a variable to use as a condition on some rules that follow
-iptables_firewall = rhel? || node['firewall']['ubuntu_iptables']
+#iptables_firewall = rhel? || node['firewall']['ubuntu_iptables']
 
-firewall_rule 'allow world to ssh' do
-  port 22
-  source '0.0.0.0/0'
-  only_if { linux? && node['firewall']['allow_ssh'] }
-end
+#firewall_rule 'allow world to ssh' do
+#  port 22
+#  source '0.0.0.0/0'
+#  only_if { linux? && node['firewall']['allow_ssh'] }
+#end
 
-firewall_rule 'allow world to winrm' do
-  port 5989
-  source '0.0.0.0/0'
-  only_if { windows? && node['firewall']['allow_winrm'] }
-end
+#firewall_rule 'allow world to winrm' do
+#  port 5989
+#  source '0.0.0.0/0'
+#  only_if { windows? && node['firewall']['allow_winrm'] }
+#end
 
 # allow established connections, ufw defaults to this but iptables does not
-firewall_rule 'established' do
-  stateful [:related, :established]
-  protocol :none # explicitly don't specify protocol
-  command :allow
-  only_if { node['firewall']['allow_established'] && iptables_firewall }
-end
+#firewall_rule 'established' do
+#  stateful [:related, :established]
+#  protocol :none # explicitly don't specify protocol
+#  command :allow
+#  only_if { node['firewall']['allow_established'] && iptables_firewall }
+#end
