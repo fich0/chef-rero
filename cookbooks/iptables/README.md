@@ -1,31 +1,37 @@
-Description
-===========
+iptables Cookbook
+=================
+
+[![Build Status](https://travis-ci.org/chef-cookbooks/iptables.svg?branch=master)](https://travis-ci.org/chef-cookbooks/iptables)
+[![Cookbook Version](https://img.shields.io/cookbook/v/iptables.svg)](https://supermarket.chef.io/cookbooks/iptables)
 
 Sets up iptables to use a script to maintain firewall rules.
 
 Requirements
-============
-
-## Platform:
-
+------------
+#### Platforms
 * Ubuntu/Debian
 * RHEL/CentOS and derivatives
 
-Recipes
-=======
+#### Chef
+* Chef 11+
 
-default
+#### Cookbooks
+* none
+
+
+Recipes
 -------
+
+####default
 
 The default recipe will install iptables and provides a ruby script
 (installed in `/usr/sbin/rebuild-iptables`) to manage rebuilding
 firewall rules from files dropped off in `/etc/iptables.d`.
 
 LWRP
-=====
+----
 
-rule
------
+####rule
 
 The lwrp drops off a template in `/etc/iptables.d` after the
 `name` parameter. The rule will get added to the local system firewall
@@ -36,7 +42,7 @@ to a LWRP.  This changes the behavior of disabling iptables rules.  Previously a
 could be disabled by specifying `enable false`.  You must now specify `action :disable`
 
 Usage
-=====
+-----
 
 Add `recipe[iptables]` to your runlist to ensure iptables is installed / running
 and to ensure that the `rebuild-iptables` script is on the system.
@@ -49,8 +55,7 @@ how to assemble final ruleset file that is going to be loaded. Please note,
 that unless specified otherwise, rules will be added under the __filter__
 table by default.
 
-Examples
---------
+####Examples
 
 To enable port 80, e.g. in an `my_httpd` cookbook, create the following
 template:
@@ -66,7 +71,7 @@ This template would be located at:
     end
 
 To redirect port 80 to local port 8080, e.g., in the aforementioned `my_httpd`
-cookbook, created the following template:
+cookbook, create the following template:
 
     *nat
     # Redirect anything on eth0 coming to port 80 to local port 8080
@@ -84,15 +89,13 @@ This would most likely go in the cookbook,
     end
 
 
-License and Author
-==================
+License & Authors
+-----------------
 
-Author:: Adam Jacob <adam@chef.io>
-Author:: Joshua Timberman <joshua@chef.io>
-Author:: Tim Smith <tsmith84@gmail.com>
+**Author:** Cookbook Engineering Team (<cookbooks@chef.io>)
 
-Copyright:: 2008-2015, Chef Software, Inc.
-
+**Copyright:** 2008-2015, Chef Software, Inc.
+```
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -104,3 +107,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```
