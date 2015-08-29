@@ -10,7 +10,7 @@ service "firewalld" do
   action [:enable, :start]
 end
 
-firewalld_port '993/tcp' do
+firewalld_port '4873/tcp' do
   action :add
   zone   'public'
 end
